@@ -5,21 +5,23 @@ namespace PaymentProcessor
 {
     public class InvoicePaymentProcessor: IInvoicePaymentProcessor
 	{
-		private readonly IInvoiceRepository _invoiceRepository;
+		public IInvoiceRepository InvoiceRepository { get; set; }
+
+        public InvoicePaymentProcessor() { }
 
         public InvoicePaymentProcessor(IInvoiceRepository invoiceRepository)
-		{
-			_invoiceRepository = invoiceRepository;
-		}
+        {
+            InvoiceRepository = invoiceRepository;
+        }
 
         public string ProcessPayment(Payment newPayment)
-		{
-            var invoice = _invoiceRepository.GetInvoice(newPayment.Reference);
+        {
+            var invoice = InvoiceRepository.GetInvoice(newPayment.Reference);
 
             if (invoice == null)
-			{
+            {
                 throw new InvalidOperationException(ReturnMessage.NOINVOICE);
-			}
+            }
 
             if (invoice.Amount == 0)
             {

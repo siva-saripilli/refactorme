@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 using PaymentProcessor;
 
@@ -13,8 +15,18 @@ namespace PaymentProcessorTests
 
 		private void Initialize(Invoice invoice)
         {
-			_invoiceRepository = new InvoiceRepository(invoice);
-			_paymentProcessor = new InvoicePaymentProcessor(_invoiceRepository);
+			var host = Host.CreateDefaultBuilder()
+				.ConfigureServices((hostContext, services) => {
+					services.AddTransient<IInvoicePaymentProcessor, InvoicePaymentProcessor>();
+					services.AddTransient<IInvoiceRepository, InvoiceRepository>();
+				}).Build();
+
+			var scope = host.Services.CreateScope();
+
+			_invoiceRepository = scope.ServiceProvider.GetService<IInvoiceRepository>();
+			_invoiceRepository.Invoice = invoice;
+			_paymentProcessor = scope.ServiceProvider.GetService<IInvoicePaymentProcessor>();
+			_paymentProcessor.InvoiceRepository = _invoiceRepository;			
         }
 
 		[Test]

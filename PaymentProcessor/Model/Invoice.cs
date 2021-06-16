@@ -12,12 +12,12 @@ namespace PaymentProcessor
 		public decimal PaymentsTotalAmount
         {
             get
-			{
-				return HasPayments ? Payments.Sum(p => p.Amount) : 0;
-            }			
+            {
+                return HasPayments ? Payments.Sum(p => p.Amount) : 0;
+            }
         }
 
-		public decimal RemainingAmount
+        public decimal RemainingAmount
         {
             get
             {

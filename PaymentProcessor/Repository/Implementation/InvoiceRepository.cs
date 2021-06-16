@@ -2,16 +2,18 @@ namespace PaymentProcessor
 {
 	public class InvoiceRepository : IInvoiceRepository
 	{
-		private readonly Invoice _invoice;
+		public Invoice Invoice { get; set; }
+
+		public InvoiceRepository() { }
 
 		public InvoiceRepository( Invoice invoice )
 		{
-			_invoice = invoice;
+			this.Invoice = invoice;
 		}
 
 		public Invoice GetInvoice( string reference )
 		{
-			return _invoice;
+			return this.Invoice;
 		}
 	}
 }
