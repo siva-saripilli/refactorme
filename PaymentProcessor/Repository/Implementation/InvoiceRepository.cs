@@ -1,7 +1,8 @@
-namespace PaymentProcessor {
-	public class InvoiceRepository
+namespace PaymentProcessor 
+{
+	public class InvoiceRepository : IInvoiceRepository
 	{
-		private Invoice _invoice;
+		private readonly Invoice _invoice;
 
 		public InvoiceRepository( Invoice invoice )
 		{
