@@ -22,7 +22,7 @@ jobs:
 
     - name: Setup VSTest
       uses: darenm/Setup-VSTest@v1
-      
+
     - name: Navigate to Workspace
       run: cd $GITHUB_WORKSPACE
 
@@ -37,7 +37,7 @@ jobs:
         msbuild.exe RefactorExercise.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
         
     - name: Test
-      run: vstest.console.exe .\PaymentProcessorTests\bin\Release\PaymentProcessorTests.dll
+      run: vstest.console.exe PaymentProcessorTests\bin\Release\PaymentProcessorTests.dll
 
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
